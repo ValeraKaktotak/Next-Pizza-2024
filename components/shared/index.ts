@@ -1,4 +1,6 @@
 export { Categories } from './Categories'
 export { Container } from './Container'
 export { Header } from './Header'
+export { SortPopUp } from './SortPopUp'
 export { Title } from './Title'
+export { TopBar } from './TopBar'
