@@ -1,16 +1,16 @@
-import { ArrowRight, ShoppingCart, User } from 'lucide-react';
-import Image from 'next/image';
-import type { FC } from 'react';
+import { ArrowRight, ShoppingCart, User } from 'lucide-react'
+import Image from 'next/image'
+import type { FC } from 'react'
 
 //Utils
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils'
 
 //Components
-import { Container } from '@/components/shared/Container';
-import { Button } from '@/components/ui';
+import { Container } from '@/components/shared/Container'
+import { Button } from '@/components/ui'
 
 interface IHeader {
-  className?: string;
+  className?: string
 }
 
 export const Header: FC<IHeader> = ({ className }) => {
@@ -36,7 +36,7 @@ export const Header: FC<IHeader> = ({ className }) => {
 
           <div>
             <Button className='group relative flex items-center'>
-              <b>520 R</b>
+              <b>520 ₽</b>
               <span className='mx-3 h-full w-[1px] bg-white/30' />
               <div className='flex items-center gap-1 transition duration-300 group-hover:opacity-0'>
                 <ShoppingCart size={16} strokeWidth={2} />
@@ -51,5 +51,5 @@ export const Header: FC<IHeader> = ({ className }) => {
         </div>
       </Container>
     </header>
-  );
-};
+  )
+}
