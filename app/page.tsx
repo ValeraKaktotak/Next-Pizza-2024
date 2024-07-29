@@ -24,7 +24,7 @@ export default function Home() {
           </div>
 
           {/* Goods List */}
-          <div className='flex-1'>
+          <section className='flex-1'>
             <div className='flex flex-col gap-16'>
               <ProductsGroupList
                 title='Пиццы'
@@ -124,7 +124,7 @@ export default function Home() {
                 categoryId={3}
               />
             </div>
-          </div>
+          </section>
         </div>
       </Container>
     </>
