@@ -10,24 +10,33 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-//Создаем таблицы
+//Таблицы
 model User {
   id Int @id @default(autoincrement())
 
-  fullName String
-  email    String
-  password String
-
+  fullName  String
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
   updatedAT DateTime @updatedAt
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+
+  name String @unique
+
+  products Product[]
 }
 
 model Product {
   id Int @id @default(autoincrement())
 
-  name     String
-  imageUrl String
-
+  name      String
+  imageUrl  String
   createdAt DateTime @default(now())
   updatedAT DateTime @updatedAt
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
 }
