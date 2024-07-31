@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "prisma:push": "prisma db push",
-    "prisma:gen": "prisma db generate",
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed"
   },
