@@ -1,5 +1,6 @@
 'use client'
 import { Search } from 'lucide-react'
+import Link from 'next/link'
 import React, { useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
 
@@ -41,7 +42,15 @@ export const SearchInput: React.FC<Props> = ({ className }) => {
             'invisible absolute top-14 z-30 w-full rounded-xl bg-white py-2 opacity-0 shadow-md transition-all duration-200',
             focused && 'visible top-12 opacity-100'
           )}
-        ></div>
+        >
+          <Link
+            href='#'
+            className='flex w-full items-center gap-3 px-3 py-2 hover:bg-primary/20'
+          >
+            <img className='h-8 w-8 rounded-sm' src='#' alt='pizza' />
+            <span>Pizza1</span>
+          </Link>
+        </div>
       </div>
     </>
   )
