@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils'
 import type { FilterCheckboxProps } from '@/components/shared/FilterCheckbox'
 
 //Components
-import { FilterCheckbox } from '@/components/shared/FilterCheckbox'
-import { Input } from '@/components/ui'
+import { FilterCheckbox } from '@/components/shared'
+import { Input, Skeleton } from '@/components/ui'
 
 type Item = FilterCheckboxProps
 
@@ -22,6 +22,7 @@ interface Props {
   onChange?: (values: string[]) => void
   defaultValue?: string[]
   className?: string
+  loading?: boolean
 }
 
 export const CheckboxFiltersGroup: React.FC<Props> = ({
@@ -32,7 +33,8 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   searchInputPlaceholder = 'Поиск...',
   className,
   onChange,
-  defaultValue
+  defaultValue,
+  loading
 }) => {
   const [showAll, setShowAll] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useState<string>('')
@@ -46,6 +48,20 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
         item.text.toLowerCase().includes(searchValue.toLowerCase())
       )
     : defaultItems!
+
+  if (loading) {
+    return (
+      <div>
+        <p className='mb-3 font-bold'>{title}</p>
+        {...Array(limit)
+          .fill(0)
+          .map((_, index) => (
+            <Skeleton key={index} className='mb-4 h-6 rounded-[8px]' />
+          ))}
+        <Skeleton className='mb-4 h-6 w-28 rounded-[8px]' />
+      </div>
+    )
+  }
 
   return (
     <div className={cn(className)}>
