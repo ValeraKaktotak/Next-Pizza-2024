@@ -23,7 +23,7 @@ interface Props {
   defaultValue?: string[]
   className?: string
   loading?: boolean
-  selectedIds?: Set<string>
+  selected?: Set<string>
 }
 
 export const CheckboxFiltersGroup: React.FC<Props> = ({
@@ -35,7 +35,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   className,
   onClickCheckbox,
   defaultValue,
-  selectedIds,
+  selected,
   loading
 }) => {
   const [showAll, setShowAll] = useState<boolean>(false)
@@ -49,7 +49,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
     ? items.filter((item) =>
         item.text.toLowerCase().includes(searchValue.toLowerCase())
       )
-    : defaultItems!
+    : defaultItems || items
 
   if (loading) {
     return (
@@ -86,9 +86,9 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
             text={item.text}
             value={item.value}
             endAdornment={item.endAdornment}
-            checked={selectedIds?.has(item.value)}
+            checked={selected?.has(item.value)}
             onCheckedChange={() => onClickCheckbox?.(item.value)}
-            name='ingredients'
+            name={title}
           />
         ))}
       </div>

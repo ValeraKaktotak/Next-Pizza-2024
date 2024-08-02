@@ -11,7 +11,7 @@ import { Api } from '@/services/api-client'
 interface useFilterIngredientsProps {
   ingredients: Ingredient[]
   loading: boolean
-  selectedIds: Set<string>
+  selectedIngredients: Set<string>
   onAddId: (id: string) => void
 }
 
@@ -37,5 +37,10 @@ export const useFilterIngredients = (): useFilterIngredientsProps => {
     fetchIngredients()
   }, [])
 
-  return { ingredients, loading, selectedIds, onAddId: toggle }
+  return {
+    ingredients,
+    loading,
+    selectedIngredients: selectedIds,
+    onAddId: toggle
+  }
 }
