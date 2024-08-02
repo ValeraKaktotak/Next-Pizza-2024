@@ -1,4 +1,5 @@
 'use client'
+import { useRouter, useSearchParams } from 'next/navigation'
 import qs from 'qs'
 import React, { useEffect, useState } from 'react'
 import { useSet } from 'react-use'
@@ -12,32 +13,48 @@ import { useFilterIngredients } from '@/hooks/useFilterIngredients'
 //Components
 import { CheckboxFiltersGroup, RangeSlider, Title } from '@/components/shared'
 import { Input } from '@/components/ui'
-import { useRouter } from 'next/navigation'
 
 interface Props {
   className?: string
 }
 
 interface PriceRangeProps {
-  priceFrom: number
-  priceTo: number
+  priceFrom?: number
+  priceTo?: number
+}
+interface QueryFilters extends PriceRangeProps {
+  selectedPizzaTypes: Set<string>
+  selectedSizeIds: Set<string>
+  ingredients?: Set<string>
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+  const searchParams = useSearchParams() as unknown as Map<
+    keyof QueryFilters,
+    string
+  >
   const router = useRouter()
   const [prices, setPrice] = useState<PriceRangeProps>({
-    priceFrom: 0,
-    priceTo: 1000
+    priceFrom: Number(searchParams.get('priceFrom')) || undefined,
+    priceTo: Number(searchParams.get('priceTo')) || undefined
   })
 
   const { ingredients, loading, onAddId, selectedIngredients } =
     useFilterIngredients()
 
   const [selectedSizeIds, { toggle: toggleSelectedSizes }] = useSet(
-    new Set<string>([])
+    new Set<string>(
+      searchParams.has('selectedSizeIds')
+        ? searchParams.get('selectedSizeIds')?.split(',')
+        : []
+    )
   )
   const [selectedPizzaTypes, { toggle: toggleSelectedPizzaTypes }] = useSet(
-    new Set<string>([])
+    new Set<string>(
+      searchParams.has('selectedPizzaTypes')
+        ? searchParams.get('selectedPizzaTypes')?.split(',')
+        : []
+    )
   )
 
   const updatePrice = (name: keyof PriceRangeProps, value: number) => {
@@ -60,7 +77,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
     const query = qs.stringify(filters, {
       arrayFormat: 'comma'
     })
-    router.push(`?${query}`)
+    router.push(`?${query}`, { scroll: false })
   }, [filters])
 
   return (
@@ -98,7 +115,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
             placeholder='0'
             min={0}
             max={1000}
-            value={String(prices.priceFrom)}
+            value={String(prices.priceFrom) || '0'}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               updatePrice('priceFrom', Number(e.target.value))
             }
@@ -108,7 +125,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
             placeholder='1000'
             min={100}
             max={1000}
-            value={String(prices.priceTo)}
+            value={String(prices.priceTo || '1000')}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               updatePrice('priceTo', Number(e.target.value))
             }
@@ -119,9 +136,9 @@ export const Filters: React.FC<Props> = ({ className }) => {
           min={0}
           max={1000}
           step={10}
-          value={[prices.priceFrom, prices.priceTo]}
-          onValueChange={([from, to]) =>
-            setPrice({ priceFrom: from, priceTo: to })
+          value={[prices.priceFrom || 0, prices.priceTo || 1000]}
+          onValueChange={([priceFrom, priceTo]) =>
+            setPrice({ priceFrom, priceTo })
           }
         />
 
