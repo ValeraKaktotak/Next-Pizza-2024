@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 
 //Utils
 import { cn } from '@/lib/utils'
@@ -20,8 +20,22 @@ interface Props {
   className?: string
 }
 
+interface PriceRangeProps {
+  priceFrom: number
+  priceTo: number
+}
+
 export const Filters: React.FC<Props> = ({ className }) => {
   const { ingredients, loading, onAddId, selectedIds } = useFilterIngredients()
+  const [{ priceFrom, priceTo }, setPrice] = useState<PriceRangeProps>({
+    priceFrom: 0,
+    priceTo: 1000
+  })
+
+  const updatePrice = (name: keyof PriceRangeProps, value: number) => {
+    setPrice((prevState) => ({ ...prevState, [name]: value }))
+  }
+
   const items = ingredients.map((item) => ({
     value: String(item.id),
     text: item.name
@@ -39,11 +53,37 @@ export const Filters: React.FC<Props> = ({ className }) => {
       <div className='mt-5 border-y border-y-neutral-100 py-6 pb-7'>
         <p className='mb-3 font-bold'>Цена от и до:</p>
         <div className='mb-5 flex gap-3'>
-          <Input type='number' placeholder='0' min={0} max={1000} />
-          <Input type='number' placeholder='1000' min={100} max={1000} />
+          <Input
+            type='number'
+            placeholder='0'
+            min={0}
+            max={1000}
+            value={String(priceFrom)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              updatePrice('priceFrom', Number(e.target.value))
+            }
+          />
+          <Input
+            type='number'
+            placeholder='1000'
+            min={100}
+            max={1000}
+            value={String(priceTo)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              updatePrice('priceTo', Number(e.target.value))
+            }
+          />
         </div>
 
-        <RangeSlider min={0} max={1000} step={10} value={[0, 1000]} />
+        <RangeSlider
+          min={0}
+          max={1000}
+          step={10}
+          value={[priceFrom, priceTo]}
+          onValueChange={([from, to]) =>
+            setPrice({ priceFrom: from, priceTo: to })
+          }
+        />
 
         <CheckboxFiltersGroup
           title='Ингредиенты'
