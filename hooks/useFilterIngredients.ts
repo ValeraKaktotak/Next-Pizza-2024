@@ -1,46 +1,56 @@
-'use client'
-import { useEffect, useState } from 'react'
-import { useSet } from 'react-use'
+// 'use client'
+// import { useSearchParams } from 'next/navigation'
+// import { useEffect, useState } from 'react'
+// import { useSet } from 'react-use'
 
-//Types
-import type { Ingredient } from '@prisma/client'
+// //Types
+// import type { Ingredient } from '@prisma/client'
 
-//Services
-import { Api } from '@/services/api-client'
+// //Services
+// import { Api } from '@/services/api-client'
 
-interface useFilterIngredientsProps {
-  ingredients: Ingredient[]
-  loading: boolean
-  selectedIngredients: Set<string>
-  onAddId: (id: string) => void
-}
+// interface useFilterIngredientsProps {
+//   ingredients: Ingredient[]
+//   loading: boolean
+//   selectedIngredients: Set<string>
+//   onAddId: (id: string) => void
+// }
 
-export const useFilterIngredients = (): useFilterIngredientsProps => {
-  const [ingredients, setIngredients] = useState<Ingredient[]>([])
-  const [loading, setLoading] = useState<boolean>(false)
+// export const useFilterIngredients = (): useFilterIngredientsProps => {
+//   const searchParams = useSearchParams()
 
-  const [selectedIds, { toggle }] = useSet(new Set<string>([]))
+// const [ingredients, setIngredients] = useState<Ingredient[]>([])
+// const [loading, setLoading] = useState<boolean>(false)
 
-  const fetchIngredients = async () => {
-    try {
-      setLoading(true)
-      const res = await Api.ingredients.getAllIngredients()
-      setIngredients(res)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
-  }
+//const [selectedIds, { toggle }] = useSet(new Set<string>([]))
+// const [selectedIds, { toggle }] = useSet(
+//   new Set<string>(
+//     searchParams.has('selectedIngredients')
+//       ? searchParams.get('selectedIngredients')?.split(',')
+//       : []
+//   )
+// )
 
-  useEffect(() => {
-    fetchIngredients()
-  }, [])
+// const fetchIngredients = async () => {
+//   try {
+//     setLoading(true)
+//     const res = await Api.ingredients.getAllIngredients()
+//     setIngredients(res)
+//   } catch (error) {
+//     console.log(error)
+//   } finally {
+//     setLoading(false)
+//   }
+// }
 
-  return {
-    ingredients,
-    loading,
-    selectedIngredients: selectedIds,
-    onAddId: toggle
-  }
-}
+// useEffect(() => {
+//   fetchIngredients()
+// }, [])
+
+// return {
+//   ingredients,
+//   loading,
+//   selectedIngredients: selectedIds,
+//   onAddId: toggle
+// }
+//}
