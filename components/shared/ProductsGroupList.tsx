@@ -10,11 +10,17 @@ import { useCategoryStore } from '@/store/category'
 
 //Components
 import { ProductCard, Title } from '@/components/shared'
+import { Ingredient, Product, ProductItem } from '@prisma/client'
+
+type ProductWithRelations = Product & {
+  variants: ProductItem[]
+  ingredients: Ingredient[]
+}
 
 interface Props {
   title: string
   //todo change unknown type
-  items: any[]
+  items: ProductWithRelations[]
   categoryId: number
   listClassName?: string
   className?: string
@@ -32,7 +38,6 @@ export const ProductsGroupList: React.FC<Props> = ({
   const intersection = useIntersection(intersectionRef, {
     threshold: 0.4
   })
-  console.log(items)
 
   useEffect(() => {
     if (intersection?.isIntersecting) {
