@@ -14,7 +14,7 @@ import { ProductCard, Title } from '@/components/shared'
 interface Props {
   title: string
   //todo change unknown type
-  items: unknown[]
+  items: any[]
   categoryId: number
   listClassName?: string
   className?: string
@@ -32,6 +32,7 @@ export const ProductsGroupList: React.FC<Props> = ({
   const intersection = useIntersection(intersectionRef, {
     threshold: 0.4
   })
+  console.log(items)
 
   useEffect(() => {
     if (intersection?.isIntersecting) {
@@ -50,7 +51,7 @@ export const ProductsGroupList: React.FC<Props> = ({
             id={product.id}
             name={product.name}
             imageUrl={product.imageUrl}
-            price={product.items[0].price}
+            price={product.variants[0].price}
           />
         ))}
       </div>
