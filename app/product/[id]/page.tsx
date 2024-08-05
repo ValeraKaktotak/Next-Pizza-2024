@@ -4,7 +4,12 @@ import { notFound } from 'next/navigation'
 import { prisma } from '@/prisma/prisma-client'
 
 //Components
-import { Container } from '@/components/shared'
+import {
+  Container,
+  GroupVariants,
+  ProductImage,
+  Title
+} from '@/components/shared'
 
 interface props {
   params: {
@@ -23,7 +28,42 @@ const ProductPage = async ({ params }: props) => {
   }
   return (
     <Container className='my-10 flex flex-col'>
-      <ProductImage src={product.imageUrl} alt={product.name} />
+      <div className='flex'>
+        <ProductImage
+          imageUrl={product.imageUrl}
+          alt={product.name}
+          size={40}
+        />
+
+        <div className='w-[490px] bg-[#fff9f0] p-7'>
+          <Title
+            text={product.name}
+            size='md'
+            className='mb-1 font-extrabold'
+          />
+
+          <p className='text-gray-400'>EXTRA INFO</p>
+
+          <GroupVariants
+            value='2'
+            items={[
+              {
+                name: 'Little',
+                value: '1'
+              },
+              {
+                name: 'Medium',
+                value: '2'
+              },
+              {
+                name: 'Large',
+                value: '3',
+                disabled: true
+              }
+            ]}
+          />
+        </div>
+      </div>
     </Container>
   )
 }
