@@ -1,10 +1,15 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 
 //Utils
 import { cn } from '@/shared/lib/utils'
 
 //Constants
 import { pizzaSizes } from '@/shared/constants/pizza'
+
+//Types
+import type { PizzaSize, PizzaType } from '@/shared/constants/pizza'
 
 //Components
 import { GroupVariants, PizzaImage, Title } from '@/shared/components/shared'
@@ -28,8 +33,10 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   className
 }) => {
   const totalPrice = 350
-  const size = 30
   const textDetail = '30 sm, default'
+
+  const [size, setSize] = useState<PizzaSize>(20)
+  const [type, setType] = useState<PizzaType>(1)
 
   return (
     <div className={cn(className, 'flex flex-1')}>
@@ -40,7 +47,11 @@ export const ChoosePizzaForm: React.FC<Props> = ({
 
         <p className='text-gray-400'>{textDetail}</p>
 
-        <GroupVariants items={pizzaSizes} />
+        <GroupVariants
+          items={pizzaSizes}
+          value={String(size)}
+          onClick={(value) => setSize(Number(value) as PizzaSize)}
+        />
 
         <Button className='mt-10 h-[55px] w-full rounded-[18px] px-10 text-base'>
           Добавить в корзину за {totalPrice} ₽
