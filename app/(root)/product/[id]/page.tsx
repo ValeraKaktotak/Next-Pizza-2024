@@ -7,7 +7,7 @@ import { prisma } from '@/prisma/prisma-client'
 import {
   Container,
   GroupVariants,
-  ProductImage,
+  PizzaImage,
   Title
 } from '@/components/shared'
 
@@ -29,11 +29,7 @@ const ProductPage = async ({ params }: props) => {
   return (
     <Container className='my-10 flex flex-col'>
       <div className='flex'>
-        <ProductImage
-          imageUrl={product.imageUrl}
-          alt={product.name}
-          size={40}
-        />
+        <PizzaImage imageUrl={product.imageUrl} alt={product.name} size={40} />
 
         <div className='w-[490px] bg-[#fff9f0] p-7'>
           <Title
