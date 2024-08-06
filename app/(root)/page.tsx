@@ -5,7 +5,7 @@ import {
   ProductsGroupList,
   Title,
   TopBar
-} from '@/components/shared'
+} from '@/shared/components/shared'
 
 //Prisma-client
 import { prisma } from '@/prisma/prisma-client'

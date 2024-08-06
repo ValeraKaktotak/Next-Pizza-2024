@@ -9,7 +9,7 @@ import {
   GroupVariants,
   PizzaImage,
   Title
-} from '@/components/shared'
+} from '@/shared/components/shared'
 
 interface props {
   params: {

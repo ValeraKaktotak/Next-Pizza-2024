@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { prisma } from '@/prisma/prisma-client'
 
 //Components
-import { ChooseProductModal } from '@/components/shared'
+import { ChooseProductModal } from '@/shared/components/shared'
 
 interface props {
   params: {
