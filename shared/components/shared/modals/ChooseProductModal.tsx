@@ -37,7 +37,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
       </DialogDescription>
       <DialogContent
         className={cn(
-          'min-h-[500px] w-full max-w-[1060px] overflow-hidden bg-white p-0',
+          'max-h-screen min-h-[550px] w-full max-w-[1060px] overflow-hidden bg-white p-0',
           className
         )}
       >
@@ -45,7 +45,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
           <ChoosePizzaForm
             imageUrl={product.imageUrl}
             name={product.name}
-            ingredients={[]}
+            ingredients={product.ingredients}
           />
         ) : (
           <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
