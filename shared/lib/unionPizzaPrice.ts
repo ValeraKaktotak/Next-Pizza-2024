@@ -1,5 +1,7 @@
 import { Ingredient, ProductItem } from '@prisma/client'
-import { PizzaSize, PizzaType } from '../constants/pizza'
+
+//Types
+import type { PizzaSize, PizzaType } from '@/shared/constants/pizza'
 
 interface unionPizzaPriceProps {
   variants: ProductItem[]

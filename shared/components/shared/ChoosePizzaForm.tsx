@@ -1,18 +1,18 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { useSet } from 'react-use'
+import React from 'react'
 
 //Utils
-import { getAvailablePizzaSizes } from '@/shared/lib/getAvailablePizzaSizes'
-import { unionPizzaPrice } from '@/shared/lib/unionPizzaPrice'
 import { cn } from '@/shared/lib/utils'
 
 //Constants
-import { mapPizzaType, pizzaTypes } from '@/shared/constants/pizza'
+import { pizzaTypes } from '@/shared/constants/pizza'
 
 //Types
 import type { PizzaSize, PizzaType } from '@/shared/constants/pizza'
 import type { Ingredient, ProductItem } from '@prisma/client'
+
+//Hooks
+import { usePizzaOptions } from '@/shared/hooks'
 
 //Components
 import {
@@ -22,6 +22,7 @@ import {
   Title
 } from '@/shared/components/shared'
 import { Button } from '@/shared/components/ui'
+import { getPizzaDetails } from '@/shared/lib/getPizzaDetails'
 
 interface Props {
   imageUrl: string
@@ -40,34 +41,23 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   onSubmit,
   className
 }) => {
-  const [size, setSize] = useState<PizzaSize>(20)
-  const [type, setType] = useState<PizzaType>(1)
-
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(
-    new Set<number>([])
-  )
-
-  const totalPrice = unionPizzaPrice({
-    type,
+  const {
+    addIngredient,
+    availablePizzaSizes,
+    selectedIngredients,
     size,
-    variants,
+    type,
+    setSize,
+    setType
+  } = usePizzaOptions(variants)
+
+  const { textDetail, totalPrice } = getPizzaDetails({
     ingredients,
-    selectedIngredients
+    selectedIngredients,
+    size,
+    type,
+    variants
   })
-  const availablePizzaSizes = getAvailablePizzaSizes({ type, variants })
-
-  const textDetail = `${size} см, ${mapPizzaType[type]} пицца.`
-
-  //selecting available pizzaSize variant
-  useEffect(() => {
-    const isAvailableSize = availablePizzaSizes?.find(
-      (item) => Number(item.value) === size && !item.disabled
-    )
-    const availableSize = availablePizzaSizes?.find((item) => !item.disabled)
-    if (!isAvailableSize && availableSize) {
-      setSize(Number(availableSize.value) as PizzaSize)
-    }
-  }, [type])
 
   const handleClickAdd = () => {
     onSubmit?.()
