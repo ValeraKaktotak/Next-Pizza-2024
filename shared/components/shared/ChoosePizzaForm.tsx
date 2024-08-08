@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react'
 import { useSet } from 'react-use'
 
 //Utils
+import { getAvailablePizzaSizes } from '@/shared/lib/getAvailablePizzaSizes'
 import { unionPizzaPrice } from '@/shared/lib/unionPizzaPrice'
 import { cn } from '@/shared/lib/utils'
 
 //Constants
-import { mapPizzaType, pizzaSizes, pizzaTypes } from '@/shared/constants/pizza'
+import { mapPizzaType, pizzaTypes } from '@/shared/constants/pizza'
 
 //Types
 import type { PizzaSize, PizzaType } from '@/shared/constants/pizza'
@@ -53,22 +54,9 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     ingredients,
     selectedIngredients
   })
+  const availablePizzaSizes = getAvailablePizzaSizes({ type, variants })
 
   const textDetail = `${size} см, ${mapPizzaType[type]} пицца.`
-
-  //filtered variants by current type
-  const filteredPizzasByType = variants.filter(
-    (item) => item.pizzaType === type
-  )
-
-  //added disable/available pizzaSize variants
-  const availablePizzaSizes = pizzaSizes.map((item) => ({
-    name: item.name,
-    value: item.value,
-    disabled: !filteredPizzasByType.some(
-      (pizza) => Number(pizza.size) === Number(item.value)
-    )
-  }))
 
   //selecting available pizzaSize variant
   useEffect(() => {
