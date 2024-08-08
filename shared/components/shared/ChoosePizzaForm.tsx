@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useSet } from 'react-use'
 
 //Utils
+import { unionPizzaPrice } from '@/shared/lib/unionPizzaPrice'
 import { cn } from '@/shared/lib/utils'
 
 //Constants
@@ -26,7 +27,7 @@ interface Props {
   name: string
   ingredients: Ingredient[]
   variants: ProductItem[]
-  onSubmit?: (itemId: number, ingredients: number[]) => void
+  onSubmit?: () => void
   className?: string
 }
 
@@ -45,32 +46,26 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     new Set<number>([])
   )
 
-  const pizzaPrice =
-    variants.find(
-      (variant) => variant.pizzaType === type && variant.size === size
-    )?.price || 0
-  const totalIngredientsPrice = ingredients
-    .filter((ingredient) => selectedIngredients.has(ingredient.id))
-    .reduce((acc, item) => acc + item.price, 0)
+  const totalPrice = unionPizzaPrice({
+    type,
+    size,
+    variants,
+    ingredients,
+    selectedIngredients
+  })
 
-  const totalPrice = pizzaPrice + totalIngredientsPrice
   const textDetail = `${size} см, ${mapPizzaType[type]} пицца.`
 
-  const handleClickAdd = () => {
-    console.log({
-      size,
-      type,
-      extraIngredients: selectedIngredients,
-      price: totalPrice
-    })
-  }
+  //filtered variants by current type
+  const filteredPizzasByType = variants.filter(
+    (item) => item.pizzaType === type
+  )
 
   //added disable/available pizzaSize variants
-  const availablePizzas = variants.filter((item) => item.pizzaType === type)
   const availablePizzaSizes = pizzaSizes.map((item) => ({
     name: item.name,
     value: item.value,
-    disabled: !availablePizzas.some(
+    disabled: !filteredPizzasByType.some(
       (pizza) => Number(pizza.size) === Number(item.value)
     )
   }))
@@ -85,6 +80,16 @@ export const ChoosePizzaForm: React.FC<Props> = ({
       setSize(Number(availableSize.value) as PizzaSize)
     }
   }, [type])
+
+  const handleClickAdd = () => {
+    onSubmit?.()
+    console.log({
+      size,
+      type,
+      extraIngredients: selectedIngredients,
+      price: totalPrice
+    })
+  }
 
   return (
     <div className={cn(className, 'flex flex-1')}>
