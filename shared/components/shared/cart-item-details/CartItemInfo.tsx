@@ -1,5 +1,9 @@
-import { cn } from '@/shared/lib/utils'
 import { FC } from 'react'
+
+//Utils
+import { cn } from '@/shared/lib/utils'
+
+//Types
 
 interface Props {
   name: string
