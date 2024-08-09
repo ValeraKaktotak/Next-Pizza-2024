@@ -11,6 +11,7 @@ import { CartDrawer } from './CartDrawer'
 interface Props {
   className?: string
 }
+/** TODO button -> button is wrong !!!*/
 
 export const CartButton: React.FC<Props> = ({ className }) => {
   return (
