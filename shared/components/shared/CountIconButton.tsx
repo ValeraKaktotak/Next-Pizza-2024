@@ -1,7 +1,14 @@
-import { CountButtonProps } from '@/shared/components/shared'
-import { cn } from '@/shared/lib/utils'
 import { Minus, Plus } from 'lucide-react'
-import { Button } from '../ui/button'
+import { FC } from 'react'
+
+//Utils
+import { cn } from '@/shared/lib/utils'
+
+//Types
+import type { CountButtonProps } from '@/shared/components/shared'
+
+//Components
+import { Button } from '@/shared/components/ui'
 
 interface IconButtonProps {
   size?: CountButtonProps['size']
@@ -10,7 +17,7 @@ interface IconButtonProps {
   onClick?: () => void
 }
 
-export const CountIconButton: React.FC<IconButtonProps> = ({
+export const CountIconButton: FC<IconButtonProps> = ({
   size = 'sm',
   disabled,
   type,

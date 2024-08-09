@@ -1,10 +1,33 @@
-import { cn } from '@/shared/lib/utils'
-import React from 'react'
+import { FC } from 'react'
 
-interface Props {
+//Utils
+import { cn } from '@/shared/lib/utils'
+
+//Types
+import type { CartItemProps } from './cart-item-details/CartItemDetails.types'
+
+//Components
+import * as CartItem from '@/shared/components/shared/cart-item-details'
+
+interface Props extends CartItemProps {
   className?: string
 }
 
-export const CartDrawerItem: React.FC<Props> = ({ className }) => {
-  return <div className={cn(className)}></div>
+export const CartDrawerItem: FC<Props> = ({
+  imageUrl,
+  name,
+  price,
+  quantity,
+  details,
+  disabled,
+  onClickCountButton,
+  onClickRemove,
+  className
+}) => {
+  return (
+    <div className={cn('flex gap-6 bg-white p-5', className)}>
+      <CartItem.Image src={imageUrl} />
+      <div className='flex-1'></div>
+    </div>
+  )
 }
