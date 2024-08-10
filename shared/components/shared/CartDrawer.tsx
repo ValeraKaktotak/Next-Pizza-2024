@@ -38,18 +38,32 @@ export const CartDrawer: FC<React.PropsWithChildren<Props>> = ({
             </SheetTitle>
           </SheetHeader>
 
-          <CartDrawerItem
-            id={1}
-            imageUrl={'http://localhost:3000/images/pizzas/Cheese.webp'}
-            details={getCartItemDetails({
-              pizzaType: 2,
-              pizzaSize: 30,
-              ingredients: [{ name: 'test1' }, { name: 'test2' }]
-            })}
-            name={'Чоризо Фреш'}
-            price={419}
-            quantity={1}
-          />
+          <div className='-mx-6 mt-5 flex-1 overflow-auto'>
+            <CartDrawerItem
+              id={1}
+              imageUrl={'http://localhost:3000/images/pizzas/Cheese.webp'}
+              details={getCartItemDetails({
+                pizzaType: 2,
+                pizzaSize: 30,
+                ingredients: [{ name: 'test1' }, { name: 'test2' }]
+              })}
+              name={'Чоризо Фреш'}
+              price={419}
+              quantity={1}
+            />
+            <CartDrawerItem
+              id={1}
+              imageUrl={'http://localhost:3000/images/pizzas/Cheese.webp'}
+              details={getCartItemDetails({
+                pizzaType: 2,
+                pizzaSize: 30,
+                ingredients: [{ name: 'test1' }, { name: 'test2' }]
+              })}
+              name={'Чоризо Фреш'}
+              price={419}
+              quantity={1}
+            />
+          </div>
 
           <SheetFooter className='-mx-6 bg-white p-8'>
             <div className='w-full'>
