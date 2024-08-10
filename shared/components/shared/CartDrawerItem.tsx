@@ -12,6 +12,7 @@ import * as CartItem from '@/shared/components/shared/cart-item-details'
 import { CountButton } from '@/shared/components/shared/CountButton'
 
 interface Props extends CartItemProps {
+  onClickCountButton?: (type: 'plus' | 'minus') => void
   className?: string
 }
 
@@ -35,7 +36,7 @@ export const CartDrawerItem: FC<Props> = ({
         <hr className='my-3' />
 
         <div className='flex items-center justify-between'>
-          <CountButton onClick={(type) => console.log(type)} value={quantity} />
+          <CountButton onClick={onClickCountButton} value={quantity} />
 
           <div className='flex items-center gap-3'>
             <CartItem.Price value={price} />
