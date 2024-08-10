@@ -1,11 +1,13 @@
+'use client'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { FC } from 'react'
 
 //Utils
 import { cn } from '@/shared/lib/utils'
 
 //Components
+import { CartDrawerItem } from '@/shared/components/shared/CartDrawerItem'
 import { Button } from '@/shared/components/ui'
 import {
   Sheet,
@@ -15,12 +17,13 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/shared/components/ui/sheet'
+import { getCartItemDetails } from '@/shared/lib/getCartItemDetails'
 
 interface Props {
   className?: string
 }
 
-export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
+export const CartDrawer: FC<React.PropsWithChildren<Props>> = ({
   className,
   children
 }) => {
@@ -35,7 +38,18 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({
             </SheetTitle>
           </SheetHeader>
 
-          {/* Goods */}
+          <CartDrawerItem
+            id={1}
+            imageUrl={'http://localhost:3000/images/pizzas/Cheese.webp'}
+            details={getCartItemDetails({
+              pizzaType: 2,
+              pizzaSize: 30,
+              ingredients: [{ name: 'test1' }, { name: 'test2' }]
+            })}
+            name={'Чоризо Фреш'}
+            price={419}
+            quantity={1}
+          />
 
           <SheetFooter className='-mx-6 bg-white p-8'>
             <div className='w-full'>
