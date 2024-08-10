@@ -1,7 +1,7 @@
 //Axios
 import { axiosInstance } from '@/shared/services/axios-instance'
 
-//TYpes
+//Types
 import type { CartDTO } from './dto/cart.dto'
 
 export const getCart = async (): Promise<CartDTO> => {
