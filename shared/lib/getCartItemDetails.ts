@@ -1,14 +1,14 @@
 //Types
 import { type PizzaSize, type PizzaType } from '@/shared/constants/pizza'
-import type { Ingredient } from '@prisma/client'
+import type { CartStateItem } from '../store/cart'
 
 //Constants
 import { mapPizzaType } from '@/shared/constants/pizza'
 
 interface getCartItemDetailsProps {
+  ingredients: CartStateItem['ingredients']
   pizzaType: PizzaType
   pizzaSize: PizzaSize
-  ingredients: Ingredient[]
 }
 
 export const getCartItemDetails = ({
