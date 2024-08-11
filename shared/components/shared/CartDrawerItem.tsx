@@ -13,6 +13,7 @@ import { CountButton } from '@/shared/components/shared/CountButton'
 
 interface Props extends CartItemProps {
   onClickCountButton?: (type: 'plus' | 'minus') => void
+  onClickRemove?: () => void
   className?: string
 }
 
@@ -43,6 +44,7 @@ export const CartDrawerItem: FC<Props> = ({
             <Trash2Icon
               className='cursor-pointer text-gray-400 hover:text-gray-600'
               size={16}
+              onClick={onClickRemove}
             />
           </div>
         </div>
