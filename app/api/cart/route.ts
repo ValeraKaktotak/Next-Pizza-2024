@@ -4,6 +4,13 @@ import { NextRequest, NextResponse } from 'next/server'
 //Prisma-client
 import { prisma } from '@/prisma/prisma-client'
 
+//Libs
+import { findOrCreateCart } from '@/shared/lib/findOrCreateCart'
+import { updateCartTotalAmount } from '@/shared/lib/updateCartTotalAmount'
+
+//Types
+import { CreateCartItemValues } from '@/shared/services/dto/cart.dto'
+
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get('cartToken')?.value
@@ -55,6 +62,7 @@ export async function POST(req: NextRequest) {
 
     const data = (await req.json()) as CreateCartItemValues
 
+    //Проверяем соответствие передаваемого товара с наличием такого же в корзине.
     const findCartItem = await prisma.cartItem.findFirst({
       where: {
         cartId: userCart.id,
@@ -67,7 +75,7 @@ export async function POST(req: NextRequest) {
       }
     })
 
-    // Если товар был найден, делаем +1
+    // Если товар был найден, делаем +1. Если нет, то создаем товар.
     if (findCartItem) {
       await prisma.cartItem.update({
         where: {
