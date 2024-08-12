@@ -9,6 +9,9 @@ import { cn } from '@/shared/lib/utils'
 //Types
 import { ProductWithRelations } from '@/@types/product'
 
+//Store
+import { useCartStore } from '@/shared/store/cart'
+
 //Components
 import { ChoosePizzaForm, ChooseProductForm } from '@/shared/components/shared'
 import {
@@ -25,7 +28,21 @@ interface Props {
 
 export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
   const router = useRouter()
-  const isPizzaForm = Boolean(product.variants[0].pizzaType)
+  const firstItem = product.variants[0]
+  const isPizzaForm = Boolean(firstItem.pizzaType)
+  const addCartItem = useCartStore((state) => state.addCartItem)
+
+  const onAddProduct = () => {
+    addCartItem({
+      productItemId: firstItem.id
+    })
+  }
+  const onAddPizza = (productItemId: number, ingredients: number[]) => {
+    addCartItem({
+      productItemId,
+      ingredients
+    })
+  }
 
   return (
     <Dialog open={Boolean(product)} onOpenChange={() => router.back()}>
@@ -47,9 +64,15 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
             name={product.name}
             ingredients={product.ingredients}
             variants={product.variants}
+            onSubmit={onAddPizza}
           />
         ) : (
-          <ChooseProductForm imageUrl={product.imageUrl} name={product.name} />
+          <ChooseProductForm
+            imageUrl={product.imageUrl}
+            name={product.name}
+            onSubmit={onAddProduct}
+            price={firstItem.price}
+          />
         )}
       </DialogContent>
     </Dialog>
