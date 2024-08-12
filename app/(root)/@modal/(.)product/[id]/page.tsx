@@ -14,6 +14,7 @@ interface props {
 
 const ProductModalPage = async ({ params }: props) => {
   const { id } = params
+  //TODO перенести все подобные запросы в API
   const product = await prisma.product.findFirst({
     where: { id: Number(id) },
     include: {
