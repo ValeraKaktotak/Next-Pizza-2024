@@ -20,6 +20,7 @@ import {
   DialogDescription,
   DialogTitle
 } from '@/shared/components/ui/dialog'
+import toast from 'react-hot-toast'
 
 interface Props {
   product: ProductWithRelations
@@ -37,11 +38,17 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
       productItemId: firstItem.id
     })
   }
-  const onAddPizza = (productItemId: number, ingredients: number[]) => {
-    addCartItem({
-      productItemId,
-      ingredients
-    })
+  const onAddPizza = async (productItemId: number, ingredients: number[]) => {
+    try {
+      await addCartItem({
+        productItemId,
+        ingredients
+      })
+      toast.success('Пицца добавлена в корзину')
+    } catch (error) {
+      toast.error('Не удалось добавить пиццу в корзину')
+      console.error(error)
+    }
   }
 
   return (
