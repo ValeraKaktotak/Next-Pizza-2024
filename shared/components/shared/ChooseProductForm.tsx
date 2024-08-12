@@ -40,7 +40,10 @@ export const ChooseProductForm: React.FC<Props> = ({
         <Title text={name} size='md' className='mb-1 font-extrabold' />
 
         <Button
-          onClick={onSubmit}
+          loading={loading}
+          onClick={() => {
+            onSubmit?.()
+          }}
           className='mt-10 h-[55px] w-full rounded-[18px] px-10 text-base'
         >
           Добавить в корзину за {price} ₽
