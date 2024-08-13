@@ -1,7 +1,9 @@
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
 import { useEffect } from 'react'
-import { Filters } from './useFilters'
+
+//Types
+import type { Filters } from './useFilters'
 
 /**
  * Хук для добавления параметров в URL

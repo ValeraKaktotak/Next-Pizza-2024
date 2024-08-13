@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 //Utils
 import { cn } from '@/shared/lib/utils'
@@ -23,12 +23,16 @@ export const Filters: React.FC<Props> = ({ className }) => {
   const { ingredients, loading } = useIngredients()
   const filters = useFilters()
 
-  const params = {
-    selectedPizzaTypes: filters.selectedPizzaTypes,
-    selectedPizzaSizes: filters.selectedPizzaSizes,
-    selectedIngredients: filters.selectedIngredients,
-    prices: filters.prices
-  }
+  const params = useMemo(
+    () => ({
+      selectedPizzaTypes: filters.selectedPizzaTypes,
+      selectedPizzaSizes: filters.selectedPizzaSizes,
+      selectedIngredients: filters.selectedIngredients,
+      prices: filters.prices
+    }),
+    [filters]
+  )
+
   useQueryFilters(params)
 
   const items = ingredients.map((item) => ({
@@ -71,7 +75,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
             placeholder='0'
             min={0}
             max={1000}
-            value={String(filters.prices.priceFrom) || '0'}
+            value={String(filters.prices.priceFrom || '0')}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               filters.setPrices('priceFrom', Number(e.target.value))
             }
