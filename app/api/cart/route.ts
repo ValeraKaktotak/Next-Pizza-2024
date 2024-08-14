@@ -62,8 +62,7 @@ export async function POST(req: NextRequest) {
 
     const data = (await req.json()) as CreateCartItemValues
 
-    //Проверяем соответствие передаваемого товара с наличием такого же в корзине.
-    const findCartItem = await prisma.cartItem.findFirst({
+    const findAllCartItems = await prisma.cartItem.findMany({
       where: {
         cartId: userCart.id,
         productItemId: data.productItemId,
@@ -72,8 +71,19 @@ export async function POST(req: NextRequest) {
             id: { in: data.ingredients }
           }
         }
+      },
+      include: {
+        ingredients: true
       }
     })
+
+    const findCartItem = findAllCartItems.find(
+      (cartItem) =>
+        cartItem.ingredients.length === data.ingredients?.length &&
+        cartItem.ingredients.every((ingredient) =>
+          data.ingredients?.includes(ingredient.id)
+        )
+    )
 
     // Если товар был найден, делаем +1. Если нет, то создаем товар.
     if (findCartItem) {
