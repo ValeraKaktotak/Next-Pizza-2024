@@ -13,10 +13,14 @@ import { ChoosePizzaForm, ChooseProductForm } from '@/shared/components/shared'
 
 interface Props {
   product: ProductWithRelations
+  onSubmit?: VoidFunction
   className?: string
 }
 
-export const ProductForm: React.FC<Props> = ({ product }) => {
+export const ProductForm: React.FC<Props> = ({
+  product,
+  onSubmit: _onSubmit
+}) => {
   const [addCartItem, loading] = useCartStore((state) => [
     state.addCartItem,
     state.loading
@@ -34,6 +38,8 @@ export const ProductForm: React.FC<Props> = ({ product }) => {
         ingredients
       })
       toast.success(product.name + ' добавлен в корзину')
+
+      _onSubmit?.()
     } catch (error) {
       toast.error('Не удалось добавить товар в корзину')
       console.error(error)

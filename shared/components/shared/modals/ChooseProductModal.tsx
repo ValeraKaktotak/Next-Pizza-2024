@@ -40,7 +40,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
           className
         )}
       >
-        <ProductForm product={product} />
+        <ProductForm product={product} onSubmit={() => router.back()} />
       </DialogContent>
     </Dialog>
   )
