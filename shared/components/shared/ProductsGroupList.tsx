@@ -19,7 +19,6 @@ type ProductWithRelations = Product & {
 
 interface Props {
   title: string
-  //todo change unknown type
   items: ProductWithRelations[]
   categoryId: number
   listClassName?: string
@@ -57,6 +56,7 @@ export const ProductsGroupList: React.FC<Props> = ({
             name={product.name}
             imageUrl={product.imageUrl}
             price={product.variants[0].price}
+            ingredients={product.ingredients}
           />
         ))}
       </div>
