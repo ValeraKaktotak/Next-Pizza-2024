@@ -75,6 +75,7 @@ export const CartDrawer: FC<React.PropsWithChildren<Props>> = ({
                 key={item.id}
                 id={item.id}
                 imageUrl={item.imageUrl}
+                disabled={item.disabled}
                 details={
                   item.pizzaType && item.pizzaSize
                     ? getCartItemDetails({
