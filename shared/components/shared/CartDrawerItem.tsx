@@ -29,7 +29,13 @@ export const CartDrawerItem: FC<Props> = ({
   className
 }) => {
   return (
-    <div className={cn('mb-2 flex gap-6 bg-white p-5', className)}>
+    <div
+      className={cn(
+        'mb-2 flex gap-6 bg-white p-5',
+        { 'pointer-events-none opacity-50': disabled },
+        className
+      )}
+    >
       <CartItem.Image src={imageUrl} />
       <div className='flex-1'>
         <CartItem.Info name={name} details={details} />
