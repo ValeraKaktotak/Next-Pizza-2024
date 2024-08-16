@@ -12,11 +12,17 @@ import { Button } from '@/shared/components/ui'
 
 interface IHeader {
   className?: string
+  hasSearch?: boolean
+  hasCart?: boolean
 }
 
-export const Header: FC<IHeader> = ({ className }) => {
+export const Header: FC<IHeader> = ({
+  className,
+  hasSearch = true,
+  hasCart = true
+}) => {
   return (
-    <header className={cn('border border-b', className)}>
+    <header className={cn('border-b', className)}>
       <Container className='flex items-center justify-between py-8'>
         {/* Left Side(Logo) */}
         <Link href='/'>
@@ -32,9 +38,11 @@ export const Header: FC<IHeader> = ({ className }) => {
         </Link>
 
         {/* Search */}
-        <div className='mx-10 flex-1'>
-          <SearchInput />
-        </div>
+        {hasSearch && (
+          <div className='mx-10 flex-1'>
+            <SearchInput />
+          </div>
+        )}
 
         {/* Right Side */}
         <div className='flex items-center gap-3'>
@@ -42,9 +50,7 @@ export const Header: FC<IHeader> = ({ className }) => {
             <User size={16} /> Войти
           </Button>
 
-          <div>
-            <CartButton />
-          </div>
+          {hasCart && <CartButton />}
         </div>
       </Container>
     </header>
