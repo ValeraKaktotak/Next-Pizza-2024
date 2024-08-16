@@ -2,6 +2,7 @@ import { ArrowRight, Package, Percent, Truck } from 'lucide-react'
 
 //Components
 import {
+  CheckoutItem,
   CheckoutItemDetails,
   Container,
   Title,
@@ -19,7 +20,26 @@ export default function CheckoutPage() {
       <div className='flex gap-10'>
         {/* Left Side */}
         <div className='mb-20 flex flex-1 flex-col gap-10'>
-          <WhiteBlock title='1. Корзина'>123</WhiteBlock>
+          <WhiteBlock title='1. Корзина'>
+            <div className='flex flex-col gap-5'>
+              <CheckoutItem
+                id={1}
+                imageUrl='http://localhost:3000/images/pizzas/Cheese.webp'
+                details='test description test test test'
+                name='Test pizza name'
+                price={216}
+                quantity={3}
+              />
+              <CheckoutItem
+                id={1}
+                imageUrl='http://localhost:3000/images/pizzas/Cheese.webp'
+                details='test description test test test'
+                name='Test pizza name'
+                price={216}
+                quantity={3}
+              />
+            </div>
+          </WhiteBlock>
 
           <WhiteBlock title='2. Персональные данные'>
             <div className='grid grid-cols-2 gap-5'>
