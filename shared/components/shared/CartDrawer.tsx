@@ -2,13 +2,14 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 //Libs
 import { getCartItemDetails } from '@/shared/lib/getCartItemDetails'
 import { cn } from '@/shared/lib/utils'
 
-//Store
+//Hooks -> Store
+import { useCart } from '@/shared/hooks'
 
 //Types
 import type { PizzaSize, PizzaType } from '@/shared/constants/pizza'
@@ -25,19 +26,10 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/shared/components/ui/sheet'
-import { useCart } from '@/shared/hooks'
 
 export const CartDrawer: FC<React.PropsWithChildren> = ({ children }) => {
   const { totalAmount, items, onClickCountButton, removeCartItem } = useCart()
-
-  // const onClickCountButton = (
-  //   id: number,
-  //   quantity: number,
-  //   type: 'plus' | 'minus'
-  // ) => {
-  //   const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
-  //   updateItemQuantity(id, newQuantity)
-  // }
+  const [redirecting, setRedirecting] = useState<boolean>(false)
 
   return (
     <div>
@@ -122,7 +114,12 @@ export const CartDrawer: FC<React.PropsWithChildren> = ({ children }) => {
                     </div>
 
                     <Link href='/checkout'>
-                      <Button type='submit' className='h-12 w-full text-base'>
+                      <Button
+                        loading={redirecting}
+                        onClick={() => setRedirecting(true)}
+                        type='submit'
+                        className='h-12 w-full text-base'
+                      >
                         Оформить заказ
                         <ArrowRight className='ml-2 w-5' />
                       </Button>
