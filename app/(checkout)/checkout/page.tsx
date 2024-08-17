@@ -14,6 +14,7 @@ import {
   CheckoutItem,
   CheckoutSidebar,
   Container,
+  FormInput,
   Title,
   WhiteBlock
 } from '@/shared/components/shared'
@@ -58,7 +59,11 @@ export default function CheckoutPage() {
 
           <WhiteBlock title='2. Персональные данные'>
             <div className='grid grid-cols-2 gap-5'>
-              <Input name='firstName' className='text-base' placeholder='Имя' />
+              <FormInput
+                name='firstName'
+                className='text-base'
+                placeholder='Имя'
+              />
               <Input
                 name='lastName'
                 className='text-base'
