@@ -2,14 +2,13 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 
 //Libs
 import { getCartItemDetails } from '@/shared/lib/getCartItemDetails'
 import { cn } from '@/shared/lib/utils'
 
 //Store
-import { useCartStore } from '@/shared/store/cart'
 
 //Types
 import type { PizzaSize, PizzaType } from '@/shared/constants/pizza'
@@ -26,6 +25,7 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/shared/components/ui/sheet'
+import { useCart } from '@/shared/hooks'
 
 interface Props {
   className?: string
@@ -35,23 +35,7 @@ export const CartDrawer: FC<React.PropsWithChildren<Props>> = ({
   className,
   children
 }) => {
-  const [
-    fetchCartItems,
-    updateItemQuantity,
-    removeCartItem,
-    totalAmount,
-    items
-  ] = useCartStore((state) => [
-    state.fetchCartItems,
-    state.updateItemQuantity,
-    state.removeCartItem,
-    state.totalAmount,
-    state.items
-  ])
-
-  useEffect(() => {
-    fetchCartItems()
-  }, [])
+  const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart()
 
   const onClickCountButton = (
     id: number,
