@@ -1,4 +1,15 @@
+'use client'
+
 import { ArrowRight, Package, Percent, Truck } from 'lucide-react'
+
+//Hooks
+import { useCart } from '@/shared/hooks'
+
+//Libs
+import { getCartItemDetails } from '@/shared/lib/getCartItemDetails'
+
+//Types
+import { PizzaSize, PizzaType } from '@/shared/constants/pizza'
 
 //Components
 import {
@@ -11,6 +22,17 @@ import {
 import { Button, Input, Textarea } from '@/shared/components/ui'
 
 export default function CheckoutPage() {
+  const { totalAmount, items, onClickCountButton, removeCartItem } = useCart()
+
+  // const onClickCountButton = (
+  //   id: number,
+  //   quantity: number,
+  //   type: 'plus' | 'minus'
+  // ) => {
+  //   const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
+  //   updateItemQuantity(id, newQuantity)
+  // }
+
   return (
     <Container>
       <Title
@@ -22,22 +44,26 @@ export default function CheckoutPage() {
         <div className='mb-20 flex flex-1 flex-col gap-10'>
           <WhiteBlock title='1. Корзина'>
             <div className='flex flex-col gap-5'>
-              <CheckoutItem
-                id={1}
-                imageUrl='http://localhost:3000/images/pizzas/Cheese.webp'
-                details='test description test test test'
-                name='Test pizza name'
-                price={216}
-                quantity={3}
-              />
-              <CheckoutItem
-                id={1}
-                imageUrl='http://localhost:3000/images/pizzas/Cheese.webp'
-                details='test description test test test'
-                name='Test pizza name'
-                price={216}
-                quantity={3}
-              />
+              {items.map((item) => (
+                <CheckoutItem
+                  key={item.id}
+                  id={item.id}
+                  imageUrl={item.imageUrl}
+                  details={getCartItemDetails({
+                    ingredients: item.ingredients,
+                    pizzaType: item.pizzaType as PizzaType,
+                    pizzaSize: item.pizzaSize as PizzaSize
+                  })}
+                  disabled={item.disabled}
+                  name={item.name}
+                  price={item.price}
+                  quantity={item.quantity}
+                  onClickCountButton={(type) => {
+                    onClickCountButton(item.id, item.quantity, type)
+                  }}
+                  onClickRemove={() => removeCartItem(item.id)}
+                />
+              ))}
             </div>
           </WhiteBlock>
 
@@ -75,7 +101,9 @@ export default function CheckoutPage() {
           <WhiteBlock className='sticky top-4 p-6'>
             <div className='flex flex-col gap-1'>
               <span className='text-xl'>Итого:</span>
-              <span className='text-[34px] font-extrabold'>3506 ₽</span>
+              <span className='text-[34px] font-extrabold'>
+                {totalAmount} ₽
+              </span>
             </div>
 
             <CheckoutItemDetails

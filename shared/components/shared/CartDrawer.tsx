@@ -27,27 +27,20 @@ import {
 } from '@/shared/components/ui/sheet'
 import { useCart } from '@/shared/hooks'
 
-interface Props {
-  className?: string
-}
+export const CartDrawer: FC<React.PropsWithChildren> = ({ children }) => {
+  const { totalAmount, items, onClickCountButton, removeCartItem } = useCart()
 
-export const CartDrawer: FC<React.PropsWithChildren<Props>> = ({
-  className,
-  children
-}) => {
-  const { totalAmount, items, updateItemQuantity, removeCartItem } = useCart()
-
-  const onClickCountButton = (
-    id: number,
-    quantity: number,
-    type: 'plus' | 'minus'
-  ) => {
-    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
-    updateItemQuantity(id, newQuantity)
-  }
+  // const onClickCountButton = (
+  //   id: number,
+  //   quantity: number,
+  //   type: 'plus' | 'minus'
+  // ) => {
+  //   const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
+  //   updateItemQuantity(id, newQuantity)
+  // }
 
   return (
-    <div className={cn(className)}>
+    <div>
       <Sheet>
         <SheetTrigger>{children}</SheetTrigger>
         <SheetContent className='flex flex-col justify-between bg-[#f4f1ee] pb-0'>
@@ -101,15 +94,11 @@ export const CartDrawer: FC<React.PropsWithChildren<Props>> = ({
                       id={item.id}
                       imageUrl={item.imageUrl}
                       disabled={item.disabled}
-                      details={
-                        item.pizzaType && item.pizzaSize
-                          ? getCartItemDetails({
-                              ingredients: item.ingredients,
-                              pizzaType: item.pizzaType as PizzaType,
-                              pizzaSize: item.pizzaSize as PizzaSize
-                            })
-                          : ''
-                      }
+                      details={getCartItemDetails({
+                        ingredients: item.ingredients,
+                        pizzaType: item.pizzaType as PizzaType,
+                        pizzaSize: item.pizzaSize as PizzaSize
+                      })}
                       name={item.name}
                       price={item.price}
                       quantity={item.quantity}

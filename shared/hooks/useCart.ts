@@ -14,14 +14,28 @@ type ReturnProps = {
   updateItemQuantity: (id: number, quantity: number) => void
   removeCartItem: (id: number) => void
   addCartItem: (values: CreateCartItemValues) => void
+  onClickCountButton: (
+    id: number,
+    quantity: number,
+    type: 'plus' | 'minus'
+  ) => void
 }
 
 export const useCart = (): ReturnProps => {
   const cartState = useCartStore((state) => state)
 
+  const onClickCountButton = (
+    id: number,
+    quantity: number,
+    type: 'plus' | 'minus'
+  ) => {
+    const newQuantity = type === 'plus' ? quantity + 1 : quantity - 1
+    cartState.updateItemQuantity(id, newQuantity)
+  }
+
   useEffect(() => {
     cartState.fetchCartItems()
   }, [])
 
-  return cartState
+  return { ...cartState, onClickCountButton }
 }
