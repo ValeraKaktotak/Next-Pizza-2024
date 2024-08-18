@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 
 //Hooks
 import { useCart } from '@/shared/hooks'
@@ -35,6 +35,10 @@ export default function CheckoutPage() {
     }
   })
 
+  const onSubmit: SubmitHandler<CheckoutFormValues> = (data) => {
+    console.log(data)
+  }
+
   return (
     <Container>
       <Title
@@ -42,25 +46,27 @@ export default function CheckoutPage() {
         className='mb-8 mt-10 text-[36px] font-extrabold'
       />
       <FormProvider {...form}>
-        <div className='flex gap-10'>
-          {/* Left Side */}
-          <div className='mb-20 flex flex-1 flex-col gap-10'>
-            <CheckoutCart
-              items={items}
-              onClickCountButton={onClickCountButton}
-              removeCartItem={removeCartItem}
-            />
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className='flex gap-10'>
+            {/* Left Side */}
+            <div className='mb-20 flex flex-1 flex-col gap-10'>
+              <CheckoutCart
+                items={items}
+                onClickCountButton={onClickCountButton}
+                removeCartItem={removeCartItem}
+              />
 
-            <CheckoutPersonalForm />
+              <CheckoutPersonalForm />
 
-            <CheckoutAddressForm />
+              <CheckoutAddressForm />
+            </div>
+
+            {/* Right Side */}
+            <div className='w-[450px]'>
+              <CheckoutSidebar totalAmount={totalAmount} />
+            </div>
           </div>
-
-          {/* Right Side */}
-          <div className='w-[450px]'>
-            <CheckoutSidebar totalAmount={totalAmount} />
-          </div>
-        </div>
+        </form>
       </FormProvider>
     </Container>
   )
