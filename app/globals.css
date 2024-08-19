@@ -92,3 +92,14 @@ html {
 #nprogress .spinner-icon {
   @apply border-l-primary border-t-primary !important;
 }
+
+.box-none input {
+  padding: 12px;
+  height: auto;
+  border-color: hsl(var(--input));
+  border-radius: 10px;
+  &:focus {
+    box-shadow: none !important;
+    border-color: #ccc !important;
+  }
+}
