@@ -13,12 +13,14 @@ import {
 } from '@/shared/constants/checkout-form-schema'
 
 //Components
-import { CheckoutSidebar, Container, Title } from '@/shared/components/shared'
 import {
   CheckoutAddressForm,
   CheckoutCart,
-  CheckoutPersonalForm
-} from '@/shared/components/shared/checkout'
+  CheckoutPersonalForm,
+  CheckoutSidebar,
+  Container,
+  Title
+} from '@/shared/components/shared'
 
 export default function CheckoutPage() {
   const { totalAmount, items, onClickCountButton, removeCartItem } = useCart()
