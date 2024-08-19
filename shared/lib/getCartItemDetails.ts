@@ -1,14 +1,14 @@
 //Types
 import { type PizzaSize, type PizzaType } from '@/shared/constants/pizza'
-import type { CartStateItem } from '../store/cart'
+import { CartStateItem } from '@/shared/lib/getCartDetails'
 
 //Constants
 import { mapPizzaType } from '@/shared/constants/pizza'
 
 interface getCartItemDetailsProps {
   ingredients: CartStateItem['ingredients']
-  pizzaType: PizzaType
-  pizzaSize: PizzaSize
+  pizzaType?: PizzaType
+  pizzaSize?: PizzaSize
 }
 
 export const getCartItemDetails = ({
