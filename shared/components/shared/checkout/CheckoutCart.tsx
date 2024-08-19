@@ -8,7 +8,11 @@ import type { PizzaSize, PizzaType } from '@/shared/constants/pizza'
 import { CartStateItem } from '@/shared/lib/getCartDetails'
 
 //Components
-import { CheckoutItem, WhiteBlock } from '@/shared/components/shared'
+import {
+  CheckoutItem,
+  CheckoutItemSkeleton,
+  WhiteBlock
+} from '@/shared/components/shared'
 
 interface Props {
   items: CartStateItem[]
@@ -19,17 +23,23 @@ interface Props {
   ) => void
   removeCartItem: (id: number) => void
   className?: string
+  loading?: boolean
 }
 
 export const CheckoutCart: React.FC<Props> = ({
   className,
   items,
   onClickCountButton,
-  removeCartItem
+  removeCartItem,
+  loading
 }) => {
   return (
     <WhiteBlock title='1. Корзина' className={className}>
       <div className='flex flex-col gap-5'>
+        {loading &&
+          items.length === 0 &&
+          [...Array(4)].map((_, i) => <CheckoutItemSkeleton key={i} />)}
+
         {items.map((item) => (
           <CheckoutItem
             key={item.id}
