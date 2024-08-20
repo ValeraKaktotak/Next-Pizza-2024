@@ -21,6 +21,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -35,6 +36,7 @@ export const CartDrawer: FC<React.PropsWithChildren> = ({ children }) => {
     <div>
       <Sheet>
         <SheetTrigger>{children}</SheetTrigger>
+        <SheetDescription />
         <SheetContent className='flex flex-col justify-between bg-[#f4f1ee] pb-0'>
           <div
             className={cn(
