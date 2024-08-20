@@ -12,6 +12,9 @@ import {
   type CheckoutFormValues
 } from '@/shared/constants/checkout-form-schema'
 
+//Actions
+import { createOrder } from '@/app/actions'
+
 //Components
 import {
   CheckoutAddressForm,
@@ -41,6 +44,7 @@ export default function CheckoutPage() {
 
   const onSubmit: SubmitHandler<CheckoutFormValues> = (data) => {
     console.log(data)
+    createOrder(data)
   }
 
   return (
