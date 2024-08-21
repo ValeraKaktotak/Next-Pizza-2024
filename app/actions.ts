@@ -63,7 +63,7 @@ export async function createOrder(data: CheckoutFormValues) {
         phone: data.phone,
         address: data.address,
         comment: data.comment,
-        totalAmount: userCart.totalAmount,
+        totalAmount: (userCart.totalAmount / 100) * 15 + 250,
         status: OrderStatus.PENDING,
         items: JSON.stringify(userCart.cartItems)
       }
@@ -86,6 +86,7 @@ export async function createOrder(data: CheckoutFormValues) {
     })
 
     //TODO: Сделать ссылку на оплату paymentUrl
+    const paymentUrl = 'http://localhost:3000/'
 
     //Сервис для отправки email письма, работает только для теста на один зареганный в этом сервисе адрес
     await sendEmail(
@@ -94,11 +95,11 @@ export async function createOrder(data: CheckoutFormValues) {
       PayOrderTemplate({
         orderId: order.id,
         totalAmount: order.totalAmount,
-        paymentUrl: 'https://github.com/ValeraKaktotak'
+        paymentUrl
       })
     )
 
-    return 'http://localhost:3000/'
+    return paymentUrl
   } catch (err) {
     console.log('[CreateOrder] Server error', err)
   }
