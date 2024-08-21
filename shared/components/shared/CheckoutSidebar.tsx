@@ -11,7 +11,6 @@ const DELIVERY_PRICE = 250
 interface Props {
   totalAmount: number
   loading?: boolean
-  submitting?: boolean
 }
 
 export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading }) => {
@@ -26,7 +25,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading }) => {
           <Skeleton className='h-[51px] w-1/2' />
         ) : (
           <span className='text-[34px] font-extrabold'>
-            {priceWithTaxAndDelivery} ₽
+            {totalAmount > 0 ? `${priceWithTaxAndDelivery} ₽` : '0 ₽'}
           </span>
         )}
       </div>

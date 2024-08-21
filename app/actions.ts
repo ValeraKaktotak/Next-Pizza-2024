@@ -1,4 +1,5 @@
 'use server'
+
 import { cookies } from 'next/headers'
 
 //Prisma-client
@@ -8,26 +9,96 @@ import { prisma } from '@/prisma/prisma-client'
 import type { CheckoutFormValues } from '@/shared/constants/checkout-form-schema'
 import { OrderStatus } from '@prisma/client'
 
+//Libs
+import { sendEmail } from '@/shared/lib/sendEmail'
+
+//Components
+import { PayOrderTemplate } from '@/shared/components/shared'
+
 export async function createOrder(data: CheckoutFormValues) {
-  const cookieStore = cookies()
-  const cartToken = cookieStore.get('cartToken')?.value
+  try {
+    const cookieStore = cookies()
+    const cartToken = cookieStore.get('cartToken')?.value
 
-  if (!cartToken) {
-    throw new Error('Cart token not found')
-  }
-
-  await prisma.order.create({
-    data: {
-      token: cartToken,
-      status: OrderStatus.PENDING,
-      totalAmount: 1000,
-      items: [],
-      fullName: data.firstName + ' ' + data.lastName,
-      email: data.email,
-      phone: data.phone,
-      address: data.address,
-      comment: data.comment
+    if (!cartToken) {
+      throw new Error('Cart token not found')
     }
-  })
-  return 'https://github.com/ValeraKaktotak'
+
+    /* Находим корзину по токену */
+    const userCart = await prisma.cart.findFirst({
+      include: {
+        user: true,
+        cartItems: {
+          include: {
+            ingredients: true,
+            productItem: {
+              include: {
+                product: true
+              }
+            }
+          }
+        }
+      },
+      where: {
+        token: cartToken
+      }
+    })
+
+    /* Если корзина не найдена возвращаем ошибку */
+    if (!userCart) {
+      throw new Error('Cart not found')
+    }
+
+    /* Если корзина пустая возвращаем ошибку */
+    if (userCart?.totalAmount === 0) {
+      throw new Error('Cart is empty')
+    }
+
+    /* Создаем заказ */
+    const order = await prisma.order.create({
+      data: {
+        token: cartToken,
+        fullName: data.firstName + ' ' + data.lastName,
+        email: data.email,
+        phone: data.phone,
+        address: data.address,
+        comment: data.comment,
+        totalAmount: userCart.totalAmount,
+        status: OrderStatus.PENDING,
+        items: JSON.stringify(userCart.cartItems)
+      }
+    })
+
+    /* Очищаем корзину */
+    await prisma.cart.update({
+      where: {
+        token: cartToken
+      },
+      data: {
+        totalAmount: 0
+      }
+    })
+
+    await prisma.cartItem.deleteMany({
+      where: {
+        cartId: userCart.id
+      }
+    })
+
+    //TODO: Сделать ссылку на оплату paymentUrl
+
+    await sendEmail(
+      data.email,
+      'Next Pizza / Оплатите заказ #' + order.id,
+      PayOrderTemplate({
+        orderId: order.id,
+        totalAmount: order.totalAmount,
+        paymentUrl: 'https://github.com/ValeraKaktotak'
+      })
+    )
+
+    return 'https://github.com/ValeraKaktotak'
+  } catch (err) {
+    console.log('[CreateOrder] Server error', err)
+  }
 }
