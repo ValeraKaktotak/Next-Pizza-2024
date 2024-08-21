@@ -11,6 +11,7 @@ const DELIVERY_PRICE = 250
 interface Props {
   totalAmount: number
   loading?: boolean
+  submitting?: boolean
 }
 
 export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading }) => {
@@ -81,6 +82,7 @@ export const CheckoutSidebar: React.FC<Props> = ({ totalAmount, loading }) => {
       <Button
         type='submit'
         className='mt-6 h-14 w-full rounded-2xl text-base font-bold'
+        loading={loading}
       >
         Перейти к оплате
         <ArrowRight className='ml-2 w-5' />
