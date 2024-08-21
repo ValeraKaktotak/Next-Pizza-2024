@@ -87,6 +87,7 @@ export async function createOrder(data: CheckoutFormValues) {
 
     //TODO: Сделать ссылку на оплату paymentUrl
 
+    //Сервис для отправки email письма, работает только для теста на один зареганный в этом сервисе адрес
     await sendEmail(
       data.email,
       'Next Pizza / Оплатите заказ #' + order.id,
@@ -97,7 +98,7 @@ export async function createOrder(data: CheckoutFormValues) {
       })
     )
 
-    return 'https://github.com/ValeraKaktotak'
+    return 'http://localhost:3000/'
   } catch (err) {
     console.log('[CreateOrder] Server error', err)
   }

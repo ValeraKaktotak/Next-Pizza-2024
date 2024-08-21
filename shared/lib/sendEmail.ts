@@ -15,7 +15,7 @@ export const sendEmail = async (
   })
 
   if (error) {
-    throw error
+    console.log(error)
   }
 
   return data
