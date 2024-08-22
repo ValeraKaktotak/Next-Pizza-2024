@@ -1,13 +1,14 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 
 //Utils
 import { cn } from '@/shared/lib/utils'
 
 //Components
 import {
+  AuthModal,
   CartButton,
   Container,
   ProfileButton,
@@ -25,6 +26,7 @@ export const Header: FC<IHeader> = ({
   hasSearch = true,
   hasCart = true
 }) => {
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <header className={cn('border-b', className)}>
       <Container className='flex items-center justify-between py-8'>
@@ -50,7 +52,9 @@ export const Header: FC<IHeader> = ({
 
         {/* Right Side */}
         <div className='flex items-center gap-3'>
-          <ProfileButton />
+          <AuthModal open={open} onClose={() => setOpen(false)} />
+
+          <ProfileButton onClickSignIn={() => setOpen(true)} />
           {hasCart && <CartButton />}
         </div>
       </Container>
