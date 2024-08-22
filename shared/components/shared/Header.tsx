@@ -1,6 +1,4 @@
 'use client'
-import { User } from 'lucide-react'
-import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { FC } from 'react'
@@ -9,8 +7,12 @@ import type { FC } from 'react'
 import { cn } from '@/shared/lib/utils'
 
 //Components
-import { CartButton, Container, SearchInput } from '@/shared/components/shared'
-import { Button } from '@/shared/components/ui'
+import {
+  CartButton,
+  Container,
+  ProfileButton,
+  SearchInput
+} from '@/shared/components/shared'
 
 interface IHeader {
   className?: string
@@ -23,10 +25,6 @@ export const Header: FC<IHeader> = ({
   hasSearch = true,
   hasCart = true
 }) => {
-  const { data } = useSession()
-
-  console.log(data)
-
   return (
     <header className={cn('border-b', className)}>
       <Container className='flex items-center justify-between py-8'>
@@ -52,19 +50,7 @@ export const Header: FC<IHeader> = ({
 
         {/* Right Side */}
         <div className='flex items-center gap-3'>
-          <Button
-            onClick={() => {
-              signIn('github', {
-                callbackUrl: '/',
-                redirect: true
-              })
-            }}
-            variant='outline'
-            className='flex items-center gap-1'
-          >
-            <User size={16} /> Войти
-          </Button>
-
+          <ProfileButton />
           {hasCart && <CartButton />}
         </div>
       </Container>
