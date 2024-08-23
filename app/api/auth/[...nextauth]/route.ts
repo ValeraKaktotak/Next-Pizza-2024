@@ -1,4 +1,5 @@
 import { prisma } from '@/prisma/prisma-client'
+import { UserRole } from '@prisma/client'
 import { compare } from 'bcrypt'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
@@ -8,7 +9,16 @@ export const authOptions = {
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID || '',
-      clientSecret: process.env.GITHUB_SECRET || ''
+      clientSecret: process.env.GITHUB_SECRET || '',
+      profile(profile) {
+        return {
+          id: profile.id,
+          name: profile.name || profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+          role: 'USER' as UserRole
+        }
+      }
     }),
     CredentialsProvider({
       name: 'Credentials',
