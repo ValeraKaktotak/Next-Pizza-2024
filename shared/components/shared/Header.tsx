@@ -1,14 +1,19 @@
-import { User } from 'lucide-react'
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import type { FC } from 'react'
+import { useState, type FC } from 'react'
 
 //Utils
 import { cn } from '@/shared/lib/utils'
 
 //Components
-import { CartButton, Container, SearchInput } from '@/shared/components/shared'
-import { Button } from '@/shared/components/ui'
+import {
+  AuthModal,
+  CartButton,
+  Container,
+  ProfileButton,
+  SearchInput
+} from '@/shared/components/shared'
 
 interface IHeader {
   className?: string
@@ -21,6 +26,7 @@ export const Header: FC<IHeader> = ({
   hasSearch = true,
   hasCart = true
 }) => {
+  const [open, setOpen] = useState<boolean>(false)
   return (
     <header className={cn('border-b', className)}>
       <Container className='flex items-center justify-between py-8'>
@@ -46,10 +52,9 @@ export const Header: FC<IHeader> = ({
 
         {/* Right Side */}
         <div className='flex items-center gap-3'>
-          <Button variant='outline' className='flex items-center gap-1'>
-            <User size={16} /> Войти
-          </Button>
+          <AuthModal open={open} onClose={() => setOpen(false)} />
 
+          <ProfileButton onClickSignIn={() => setOpen(true)} />
           {hasCart && <CartButton />}
         </div>
       </Container>
