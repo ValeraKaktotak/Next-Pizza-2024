@@ -61,7 +61,7 @@ const LoginForm: FC<ILoginForm> = ({ onClose }) => {
             </p>
           </div>
           <img
-            src='/assets/images/phone-icon.png'
+            src='/images/tools/phone-icon.png'
             alt='phone-icon'
             width={60}
             height={60}
