@@ -22,5 +22,5 @@ export default async function ProfilePage() {
   }
 
   //return <ProfileForm data={user} />
-  return <div>PROFILE FORM</div>
+  return <div>PROFILE</div>
 }
