@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation'
 import qs from 'qs'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 //Types
 import type { Filters } from './useFilters'
@@ -14,6 +14,7 @@ import type { Filters } from './useFilters'
  * @param prices: PriceRangeProps
  */
 export const useQueryFilters = (filters: Filters) => {
+  const isMounted = useRef(false)
   const router = useRouter()
   const params = {
     ...filters.prices,
@@ -23,9 +24,13 @@ export const useQueryFilters = (filters: Filters) => {
   }
 
   useEffect(() => {
-    const query = qs.stringify(params, {
-      arrayFormat: 'comma'
-    })
-    router.push(`?${query}`, { scroll: false })
-  }, [filters])
+    if (isMounted) {
+      const query = qs.stringify(params, {
+        arrayFormat: 'comma'
+      })
+      router.push(`?${query}`, { scroll: false })
+      isMounted.current = true
+    }
+  }),
+    [filters]
 }
