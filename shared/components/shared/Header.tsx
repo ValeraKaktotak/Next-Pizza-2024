@@ -1,7 +1,9 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState, type FC } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState, type FC } from 'react'
+import toast from 'react-hot-toast'
 
 //Utils
 import { cn } from '@/shared/lib/utils'
@@ -26,7 +28,30 @@ export const Header: FC<IHeader> = ({
   hasSearch = true,
   hasCart = true
 }) => {
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const [open, setOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    let toastMessage = ''
+
+    if (searchParams.has('paid')) {
+      toastMessage = 'Заказ успешно оплачен! Информация отправлена на почту.'
+    }
+
+    if (searchParams.has('verified')) {
+      toastMessage = 'Почта успешно подтверждена!'
+    }
+
+    if (toastMessage) {
+      setTimeout(() => {
+        router.replace('/')
+        toast.success(toastMessage, {
+          duration: 3000
+        })
+      }, 1000)
+    }
+  }, [])
   return (
     <header className={cn('border-b', className)}>
       <Container className='flex items-center justify-between py-8'>
