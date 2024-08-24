@@ -16,7 +16,7 @@ interface ILoginForm {
   onClose?: VoidFunction
 }
 
-const LoginForm: FC<ILoginForm> = ({ onClose }) => {
+export const LoginForm: FC<ILoginForm> = ({ onClose }) => {
   const form = useForm<TFormLoginValues>({
     resolver: zodResolver(formLoginSchema),
     defaultValues: {
@@ -82,4 +82,3 @@ const LoginForm: FC<ILoginForm> = ({ onClose }) => {
     </FormProvider>
   )
 }
-export default LoginForm

@@ -18,7 +18,7 @@ model User {
   password         String
   cart             Cart?
   verificationCode VerificationCode?
-  verified         DateTime
+  verified         DateTime?
   orders           Order[]
   role             UserRole          @default(USER)
   provider         String?

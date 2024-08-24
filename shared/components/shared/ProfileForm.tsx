@@ -13,6 +13,7 @@ import {
 import type { User } from '@prisma/client'
 
 //Components
+import { updateUserInfo } from '@/app/actions'
 import { Container, FormInput, Title } from '@/shared/components/shared'
 import { Button } from '@/shared/components/ui'
 
