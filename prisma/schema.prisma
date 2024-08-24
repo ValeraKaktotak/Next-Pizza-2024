@@ -117,6 +117,8 @@ model VerificationCode {
   userId    Int      @unique
   code      String
   createdAt DateTime @default(now())
+
+  @@unique([userId, code])
 }
 
 enum OrderStatus {
