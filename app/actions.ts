@@ -89,7 +89,7 @@ export async function createOrder(data: CheckoutFormValues) {
     })
 
     //TODO: Сделать ссылку на оплату paymentUrl
-    const paymentUrl = 'http://localhost:3000/'
+    const paymentUrl = 'https://next-pizza-2024-virid.vercel.app/'
 
     //Сервис для отправки email письма, работает только для теста на один зареганный в этом сервисе адрес
     await sendEmail(
