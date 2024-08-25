@@ -61,7 +61,7 @@ export const AuthModal: React.FC<Props> = ({ open, onClose }) => {
           <Button
             variant='secondary'
             onClick={() =>
-              signIn('github', {
+              signIn('google', {
                 callbackUrl: '/',
                 redirect: true
               })
