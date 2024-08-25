@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 
 //Components
 import { Header } from '@/shared/components/shared'
@@ -17,7 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <div className='min-h-screen'>
-      <Header />
+      <Suspense>
+        <Header />
+      </Suspense>
       {children}
       {modal}
     </div>

@@ -10,7 +10,6 @@ export type IStory = Story & {
 
 export const getAll = async () => {
   const { data } = await axiosInstance.get<IStory[]>('/stories')
-  console.log(data)
 
   return data
 }
