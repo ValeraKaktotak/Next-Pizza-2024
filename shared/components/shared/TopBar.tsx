@@ -22,7 +22,7 @@ export const TopBar: React.FC<Props> = ({ className, categories }) => {
         className
       )}
     >
-      <Container className='flex items-center justify-between'>
+      <Container className='flex flex-wrap items-center justify-between gap-5 sm:gap-0'>
         <Categories items={categories} />
         <SortPopUp />
       </Container>

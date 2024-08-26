@@ -20,7 +20,10 @@ export const Categories: React.FC<Props> = ({ items, className }) => {
 
   return (
     <div
-      className={cn('inline-flex gap-1 rounded-2xl bg-gray-50 p-1', className)}
+      className={cn(
+        'inline-flex flex-wrap justify-center gap-1 rounded-2xl bg-gray-50 p-1 sm:justify-normal',
+        className
+      )}
     >
       {items?.map(({ name, id }, index) => (
         <a
