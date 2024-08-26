@@ -36,7 +36,7 @@ export default async function Home({
       <Container className='pp-14 pb-14'>
         <div className='flex gap-[60px]'>
           {/* Filtering */}
-          <div className='w-[250px]'>
+          <div className='hidden w-[250px] lg:flex'>
             <Suspense>
               <Filters />
             </Suspense>

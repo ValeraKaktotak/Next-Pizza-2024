@@ -7,7 +7,12 @@ import { cn } from '@/shared/lib/utils'
 import type { Category } from '@prisma/client'
 
 //Components
-import { Categories, Container, SortPopUp } from '@/shared/components/shared'
+import {
+  Categories,
+  Container,
+  MobileFilters,
+  SortPopUp
+} from '@/shared/components/shared'
 
 interface Props {
   className?: string
@@ -25,6 +30,11 @@ export const TopBar: React.FC<Props> = ({ className, categories }) => {
       <Container className='flex flex-wrap items-center justify-between gap-5 sm:gap-0'>
         <Categories items={categories} />
         <SortPopUp />
+
+        {/*Mobile Navigation */}
+        <div className='lg:hidden'>
+          <MobileFilters />
+        </div>
       </Container>
     </div>
   )
