@@ -54,7 +54,7 @@ export const Header: FC<IHeader> = ({
   }, [])
   return (
     <header className={cn('border-b', className)}>
-      <Container className='flex items-center justify-between py-8'>
+      <Container className='flex flex-col items-center justify-between gap-5 py-8 sm:flex-row sm:gap-0'>
         {/* Left Side(Logo) */}
         <Link href='/'>
           <div className='flex items-center gap-4'>
