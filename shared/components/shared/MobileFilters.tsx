@@ -1,5 +1,5 @@
 import { AlignJustify } from 'lucide-react'
-import type { FC } from 'react'
+import { Suspense, type FC } from 'react'
 
 //Components
 import {
@@ -8,6 +8,7 @@ import {
   SheetContent,
   SheetTrigger
 } from '@/shared/components/ui/sheet'
+import { Filters } from './Filters'
 
 interface IMobileNavigation {}
 
@@ -21,7 +22,11 @@ export const MobileFilters: FC<IMobileNavigation> = () => {
         <SheetContent>
           <div className='flex h-full flex-col items-center justify-between py-8'>
             <div className='flex flex-col items-center gap-y-32'>
-              <SheetClose asChild></SheetClose>
+              <SheetClose asChild>
+                <Suspense>
+                  <Filters />
+                </Suspense>
+              </SheetClose>
             </div>
           </div>
         </SheetContent>

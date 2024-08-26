@@ -31,7 +31,7 @@ export default async function Home({
         categories={categories.filter((cat) => cat.products.length > 0)}
       />
 
-      <Stories />
+      <Stories className='hidden sm:flex' />
 
       <Container className='pp-14 pb-14'>
         <div className='flex gap-[60px]'>
